@@ -1,0 +1,46 @@
+sim_node:
+  ros__parameters:
+    m1: 1.0
+    l1: 0.5
+    lc1: 0.25   # center-of-mass distance from joint 1, see docs/eom_derivation.md
+    I1: 0.25
+    b1: 0.05
+    m2: 1.0
+    l2: 0.5
+    lc2: 0.25   # center-of-mass distance from joint 2, see docs/eom_derivation.md
+    I2: 0.25
+    b2: 0.05
+    g: 9.81
+    tau1_max: 5.0
+    tau2_max: 5.0
+    sim_rate_hz: 200.0
+    ic_mode: "downward"   # upright | downward | random
+    theta10_downward: 3.14159265
+    theta20_downward: 0.0
+
+controller_pid:
+  ros__parameters:
+    kp1: 10.0
+    ki1: 0.0
+    kd1: 2.0
+    kp2: 10.0
+    ki2: 0.0
+    kd2: 2.0
+    tau1_max: 5.0
+    tau2_max: 5.0
+    upright_threshold_rad: 0.26   # ~15 deg -- switch point balance <-> swing-up, applied per joint
+    swingup_gain1: 1.0            # energy-shaping gain, joint 1 -- TODO tune
+    swingup_gain2: 1.0            # energy-shaping gain, joint 2 -- TODO tune
+
+controller_mpc:
+  ros__parameters:
+    horizon_steps: 20
+    dt: 0.02
+    tau1_max: 5.0
+    tau2_max: 5.0
+    q_theta1: 10.0
+    q_theta1_dot: 1.0
+    q_theta2: 10.0
+    q_theta2_dot: 1.0
+    r_torque1: 1.0
+    r_torque2: 1.0

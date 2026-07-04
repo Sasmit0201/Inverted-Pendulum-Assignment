@@ -1,0 +1,24 @@
+# Per-exercise pass/fail thresholds for scripts/evaluate.py (double
+# inverted pendulum). Both theta1 and theta2 must settle within
+# settling_band_rad of upright (0) -- see README.md Sec 5.
+
+balance:
+  settling_band_rad: 0.05
+  settling_time_s: 4.0
+  max_overshoot_rad: 0.4
+  steady_state_error_rad: 0.05
+  max_saturation_violations: 0
+
+swingup:
+  settling_band_rad: 0.05
+  settling_time_s: 10.0
+  max_overshoot_rad: 0.6
+  steady_state_error_rad: 0.05
+  max_saturation_violations: 0
+
+mpc_balance:
+  settling_band_rad: 0.05
+  settling_time_s: 3.0
+  max_overshoot_rad: 0.3
+  steady_state_error_rad: 0.05
+  max_saturation_violations: 0

@@ -1,0 +1,31 @@
+# Per-exercise pass/fail thresholds for scripts/evaluate.py.
+#
+# settling_band_rad:        band around target considered "settled" (upright = 0)
+# settling_time_s:          max allowed time to enter and remain in the band
+# max_overshoot_rad:        max allowed overshoot beyond target before settling
+# steady_state_error_rad:   max allowed |theta| after settling_time_s
+# max_saturation_violations: max allowed timesteps with |tau| > tau_max
+# time_to_catch_s:          (swingup only) max allowed time to first enter the
+#                           near-upright band
+
+balance:
+  settling_band_rad: 0.035        # ~2 deg
+  settling_time_s: 3.0
+  max_overshoot_rad: 0.35
+  steady_state_error_rad: 0.035
+  max_saturation_violations: 0
+
+swingup:
+  settling_band_rad: 0.035
+  settling_time_s: 8.0
+  time_to_catch_s: 6.0
+  max_overshoot_rad: 0.5
+  steady_state_error_rad: 0.035
+  max_saturation_violations: 0
+
+mpc_balance:
+  settling_band_rad: 0.035
+  settling_time_s: 2.0
+  max_overshoot_rad: 0.2
+  steady_state_error_rad: 0.02
+  max_saturation_violations: 0

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://download.ros.org/schema/package_format3.xsd"?>
+<package format="3">
+  <name>double_inverted</name>
+  <version>0.0.1</version>
+  <description>Double inverted pendulum: sim, PID/MPC controllers, evaluator.</description>
+  <maintainer email="you@example.com">maintainer</maintainer>
+  <license>MIT</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>custom_msgs</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>xacro</depend>
+  <exec_depend>foxglove_bridge</exec_depend>
+  <exec_depend>ros2launch</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

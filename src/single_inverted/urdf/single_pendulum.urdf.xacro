@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot name="single_pendulum" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="rod_length" value="0.5"/>
+  <xacro:property name="rod_radius" value="0.02"/>
+  <xacro:property name="bob_radius" value="0.05"/>
+
+  <link name="world"/>
+
+  <link name="base_link">
+    <visual>
+      <geometry><cylinder radius="0.03" length="0.05"/></geometry>
+      <material name="grey"><color rgba="0.5 0.5 0.5 1"/></material>
+    </visual>
+  </link>
+
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.6" rpy="0 0 0"/>
+  </joint>
+
+  <!-- theta = 0 is upright: the rod points along +z at rest. Rotating
+       about the y axis matches sim_node's CCW-positive convention when
+       viewed from +y. Joint name MUST match sim_node's joint_states name. -->
+  <link name="rod_link">
+    <visual>
+      <origin xyz="0 0 ${rod_length/2}" rpy="0 0 0"/>
+      <geometry><cylinder radius="${rod_radius}" length="${rod_length}"/></geometry>
+      <material name="blue"><color rgba="0.1 0.3 0.9 1"/></material>
+    </visual>
+  </link>
+
+  <joint name="pivot_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="rod_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-6.283" upper="6.283" effort="10" velocity="20"/>
+  </joint>
+
+  <link name="bob_link">
+    <visual>
+      <geometry><sphere radius="${bob_radius}"/></geometry>
+      <material name="red"><color rgba="0.9 0.1 0.1 1"/></material>
+    </visual>
+  </link>
+
+  <joint name="rod_to_bob" type="fixed">
+    <parent link="rod_link"/>
+    <child link="bob_link"/>
+    <origin xyz="0 0 ${rod_length}" rpy="0 0 0"/>
+  </joint>
+
+</robot>
