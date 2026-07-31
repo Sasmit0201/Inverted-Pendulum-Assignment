@@ -21,18 +21,18 @@ controller_pid:
   ros__parameters:
     kp: 10.0
     ki: 0.0
-    kd: 2.0
+    kd: 3.5
     tau_max: 5.0
-    upright_threshold_rad: 0.26   # ~15 deg -- switch point balance <-> swing-up
-    swingup_gain: 1.0             # energy-shaping gain -- TODO tune
+    upright_threshold_rad: 0.2 # ~15 deg -- switch point balance <-> swing-up
+    swingup_gain: 0.1             # energy-shaping gain -- TODO tune
 
 controller_mpc:
   ros__parameters:
-    horizon_steps: 20
+    horizon_steps: 50
     dt: 0.02
     tau_max: 5.0
-    q_theta: 10.0
-    q_theta_dot: 1.0
-    r_torque: 1.0
-    q_terminal_theta: 50.0
-    q_terminal_theta_dot: 5.0
+    q_theta: 100.0
+    q_theta_dot: 20.0
+    r_torque: 6.0
+    q_terminal_theta: 1000.0
+    q_terminal_theta_dot: 100.0

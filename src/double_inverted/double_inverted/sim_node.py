@@ -72,7 +72,7 @@ class SimNode(Node):
     def _initial_condition(self):
         mode = self.get_parameter('ic_mode').value
         if mode == 'upright':
-            return np.array([0.0, 0.0, 0.0, 0.0])
+            return np.array([0.1, 0.0, 0.0, 0.0])
         if mode == 'random':
             return np.array([
                 np.random.uniform(-np.pi, np.pi), np.random.uniform(-0.5, 0.5),
@@ -90,19 +90,28 @@ class SimNode(Node):
         ])
 
     def _rk4_step(self, state, tau):
-        """TODO (trainee): RK4 integration of the 2-link EOM.
-
-        Call dynamics.theta_ddot(state, tau, self.params) to get
-        [theta1_ddot, theta2_ddot], build the full 4-state derivative
-        [theta1_dot, theta1_ddot, theta2_dot, theta2_ddot], and integrate
-        one dt step with RK4 (same structure as
-        single_inverted/sim_node.py::_rk4_step, which is GIVEN -- use it
-        as a reference).
+        """RK4 integration of the 2-link EOM.
+        
+        Calls dynamics.theta_ddot to get accelerations, builds the 4-state 
+        derivative, and integrates one dt step with RK4.
         """
-        raise NotImplementedError(
-            'double_inverted/sim_node.py::_rk4_step is a trainee deliverable -- '
-            'see README.md Sec 5.1')
+        def f(s):
+            # 1. Get accelerations: [theta1_ddot, theta2_ddot]
+            accels = dynamics.theta_ddot(s, tau, self.params)
+            
+            # 2. Build 4-state derivative: [theta1_dot, theta1_ddot, theta2_dot, theta2_ddot]
+            # s[1] is theta1_dot, s[3] is theta2_dot
+            return np.array([s[1], accels[0], s[3], accels[1]])
 
+        # 3. Standard RK4 Integration
+        k1 = f(state)
+        k2 = f(state + 0.5 * self.dt * k1)
+        k3 = f(state + 0.5 * self.dt * k2)
+        k4 = f(state + self.dt * k3)
+
+        next_state = state + (self.dt / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4)
+        
+        return next_state
     def _step(self):
         self.state = self._rk4_step(self.state, self.tau_cmd)
 
